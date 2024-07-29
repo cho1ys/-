@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>끝말잇기</title>
+</head>
+<body>
+    <div><span id ="order">1</span>번째 참가자</div>
+    <div>제시어: <span id = "word"></span></div>
+    <input type = "text">
+    <button>입력</button>
+    <script>
+        const number = Number(prompt("참가자는 몇 명 인가"))
+        const $input = document.querySelector('input')
+        const $button = document.querySelector('button')
+        const $word = document.querySelector('#word')
+        const $order = document.querySelector('#order')
+
+        let newWord
+        let word
+        const onInput = (event) => { // 인풋에 값 입력 시
+            newWord = event.target.value
+        }
+        const onClickButton = () => { // 입력버튼 클릭 시
+            if(!word || word.at(-1) === newWord[0]){ // 제시어가 없거나, 제시어의 마지막 글자가 현재 단어의 첫 글자와 같다면
+                word = newWord // 제시어를 현재 단어로 교체 
+                $word.textContent = word // 상단 제시어 문구 수정
+                const order = Number($order.textContent)
+                if(order +1 >number){ // 현재 순번 + 1 이 참가자 수보다 크다면
+                    $order.textContent = 1 // 순번을 다시 1번으로 
+                }else{  // 아니라면 
+                    $order.textContent = order+1 // 순번을 + 1
+                }
+            }else{
+                alert('틀렸습니다')
+            }
+            $input.value = '' // 입력버튼 클릭 이후 내용을 삭제
+            $input.focus() // 다시 포커스
+ 
+        }
+        $input.addEventListener('input', onInput); // input란에 이벤트추가
+        $button.addEventListener('click', onClickButton); // 버튼에 이벤트 추가
+    </script>
+</body>
+</html>
